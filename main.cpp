@@ -124,7 +124,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		//backGround描画
-		Novice::DrawSprite(0, 0, backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
+		Novice::DrawSprite(static_cast<int>(backGroundPosX), 0, backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
+		Novice::DrawSprite(static_cast<int>(backGroundPosX2), 0, backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
 
 		//player描画
 		Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);

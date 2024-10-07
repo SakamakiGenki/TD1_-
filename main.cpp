@@ -3,7 +3,7 @@
 
 const char kWindowTitle[] = "GC1B_05_サカマキ_ゲンキ_タイトル";
 
-int collision(int a, int b) {
+float collision(float  a, float b) {
 	return sqrtf(a * a + b * b);
 }
 

@@ -86,7 +86,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		if (keys[DIK_W] && !preKeys[DIK_W]) {
 			if (jumpCount > 0) {
-				player.velocity.y = -20.0f;
+				player.velocity.y = -15.0f;
 				jumpCount--;
 			}
 		} else { //押されていないとき

@@ -44,6 +44,9 @@
     <ClCompile Include="junp.cpp">
       <Filter>関数保存フォルダ</Filter>
     </ClCompile>
+    <ClCompile Include="spike.cpp">
+      <Filter>関数保存フォルダ</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\KamataEngine\DirectXGame\audio\Audio.h">
@@ -120,7 +123,7 @@
     <ClInclude Include="junp.h">
       <Filter>関数保存フォルダ</Filter>
     </ClInclude>
-    <ClInclude Include="variable.h">
+    <ClInclude Include="spike.h">
       <Filter>関数保存フォルダ</Filter>
     </ClInclude>
   </ItemGroup>

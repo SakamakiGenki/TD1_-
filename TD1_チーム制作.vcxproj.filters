@@ -44,6 +44,9 @@
     <ClCompile Include="junp.cpp">
       <Filter>関数保存フォルダ</Filter>
     </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\KamataEngine\DirectXGame\audio\Audio.h">
@@ -123,5 +126,6 @@
     <ClInclude Include="variable.h">
       <Filter>関数保存フォルダ</Filter>
     </ClInclude>
+    <ClInclude Include="collision.h" />
   </ItemGroup>
 </Project>

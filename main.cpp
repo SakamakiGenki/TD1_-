@@ -1,6 +1,9 @@
 #include <Novice.h>
 #include<math.h>
 
+
+#include"collision.h"
+
 const char kWindowTitle[] = "GC1B_05_サカマキ_ゲンキ_タイトル";
 
 float collision(float  a, float b) {

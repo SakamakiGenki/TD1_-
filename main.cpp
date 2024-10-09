@@ -31,6 +31,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		float heigth; //画像の縦幅
 		Vector2 velocity; //player速度
 		Vector2 acceleration; //player加速度
+		float radius; //画像の半径
 	};
 
 	//player構造体
@@ -41,8 +42,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		player.heigth = 32.0f,
 		player.velocity = {0.0f, 0.0f},
 		player.acceleration = {2.0f, 2.0f},
+		player.radius = 16.0f,
 	};
-	float playerRad = 16.0f;
+	
 	//playerの動く速度
 	//float playerSpeed = 2.0f;
 	//反発係数
@@ -105,8 +107,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		player.pos.y += player.velocity.y;
 
 		//地面にめり込まない処理
-		if (player.pos.y >= screenDown - playerRad) {
-			player.pos.y = screenDown - playerRad;
+		if (player.pos.y >= screenDown - player.radius) {
+			player.pos.y = screenDown - player.radius;
 			player.velocity.y = player.velocity.y * -e;
 			jumpCount = 2;
 		}
@@ -135,7 +137,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//player描画
 		Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);
 		Novice::DrawEllipse(static_cast<int>(player.pos.x + player.width / 2), static_cast<int>(player.pos.y + player.heigth / 2),
-			                static_cast<int>(playerRad), static_cast<int>(playerRad), 0.0f, WHITE, kFillModeWireFrame);
+			                static_cast<int>(player.radius), static_cast<int>(player.radius), 0.0f, WHITE, kFillModeWireFrame);
 
 		///
 		/// ↑描画処理ここまで

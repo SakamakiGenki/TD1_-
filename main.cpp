@@ -121,6 +121,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		if (backGroundPosX <= -1280.0f) {
 			backGroundPosX = 0.0f;
 		}
+
 		backGroundPosX2 = backGroundPosX + 1280.0f;
 
 		///

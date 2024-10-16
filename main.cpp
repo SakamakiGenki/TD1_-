@@ -6,9 +6,7 @@
 
 const char kWindowTitle[] = "GC1B_05_サカマキ_ゲンキ_タイトル";
 
-float collision(float  a, float b) {
-	return sqrtf(a * a + b * b);
-}
+
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {

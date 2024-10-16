@@ -62,6 +62,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	float backGroundPosX = 0.0f;
 	float backGroundPosX2 = -1280.0f;
 
+	enum SCENE {
+		SCENE1,
+		SCENE2,
+		SCENE3,
+		SCENE4,
+	
+	};
+	int scene = SCENE1;
+
 	//score宣言
 	//int score = 00000;
 	//int displayScore = score;
@@ -84,6 +93,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//player速度
 		//player.pos.x += playerSpeed;
 
+		switch (scene){
+		case SCENE1:
+			//タイトル
+			if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
+				scene = SCENE2;
+			}
+			break;
+		case SCENE2:
+			//ステージ１
+		
 		//playerのジャンプ処理
 		if (!keys[DIK_W] && preKeys[DIK_W]) {
 			if (player.velocity.y < 0.0f) {
@@ -120,7 +139,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			backGroundPosX = 0.0f;
 		}
 		backGroundPosX2 = backGroundPosX + 1280.0f;
-
+		break;
+		case SCENE3:
+			//ステージ２
+			break;
+		case SCENE4:
+			//ステージ３
+			break;
+		default:
+			break;
+		}
 		///
 		/// ↑更新処理ここまで
 		///
@@ -128,15 +156,33 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
+		switch (scene){
+		case SCENE1:
+			//タイトル
+			break;
+		case SCENE2:
+			//ステージ1
+			//backGround描画
+			Novice::DrawSprite(static_cast<int>(backGroundPosX), 0, backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
+			Novice::DrawSprite(static_cast<int>(backGroundPosX2), 0, backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
 
-		//backGround描画
-		Novice::DrawSprite(static_cast<int>(backGroundPosX), 0, backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
-		Novice::DrawSprite(static_cast<int>(backGroundPosX2), 0, backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
+			//player描画
+			Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);
+			Novice::DrawEllipse(static_cast<int>(player.pos.x + player.width / 2), static_cast<int>(player.pos.y + player.heigth / 2),
+				static_cast<int>(playerRad), static_cast<int>(playerRad), 0.0f, WHITE, kFillModeWireFrame);
+			break;
 
-		//player描画
-		Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);
-		Novice::DrawEllipse(static_cast<int>(player.pos.x + player.width / 2), static_cast<int>(player.pos.y + player.heigth / 2),
-			                static_cast<int>(playerRad), static_cast<int>(playerRad), 0.0f, WHITE, kFillModeWireFrame);
+		case SCENE3:
+			//ステージ２
+			break;
+		case SCENE4:
+			//ステージ３
+			break;
+		default:
+			break;
+		
+		}
+		
 
 		///
 		/// ↑描画処理ここまで

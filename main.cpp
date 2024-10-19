@@ -46,6 +46,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	float playerRad = 16.0f;
 	//playerの動く速度
 	//float playerSpeed = 2.0f;
+	// 
 	//反発係数
 	float e = 0.5f; //地面にぶつかったとき跳ねる動作をさせるための変数
 
@@ -62,6 +63,32 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	float backGroundPosX = 0.0f;
 	float backGroundPosX2 = -1280.0f;
 
+#pragma region spike
+
+	//とげ宣言
+	struct Spike {
+		Vector2 pos;
+		float speed;
+		float heightHalf;
+		float widhtHalf;
+	};
+
+	//とげ構造体
+	Spike spike[10];
+	for (int i = 0; i < 10; i++) {
+		spike[i].pos.x = 500.0f + i * 500.0f;
+		spike[i].pos.y = 514.0f;
+		spike[i].speed = 5.0f;
+		spike[i].heightHalf = 32.0f;
+		spike[i].widhtHalf = 32.0f;
+	}
+
+	//とげ読み込み
+	int spikeTexture = Novice::LoadTexture("./Resorces/spike.png");
+
+#pragma endregion
+
+	//シーン切り替え
 	enum SCENE {
 		SCENE1,
 		SCENE2,
@@ -131,6 +158,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			jumpCount = 2;
 		}
 
+		//とげの移動
+		for (int i = 0; i < 10; i++) {
+			spike[i].pos.x -= spike[i].speed;
+		}
+
 		//背景地面の動作速度
 		backGroundPosX -= 3;
 
@@ -140,6 +172,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		backGroundPosX2 = backGroundPosX + 1280.0f;
 		break;
+
 		case SCENE3:
 			//ステージ２
 			break;
@@ -165,6 +198,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//backGround描画
 			Novice::DrawSprite(static_cast<int>(backGroundPosX), 0, backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
 			Novice::DrawSprite(static_cast<int>(backGroundPosX2), 0, backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
+
+			//とげ描画
+			for (int i = 0; i < 10; i++) {
+				Novice::DrawSprite(static_cast<int>(spike[i].pos.x - spike[i].widhtHalf),
+					static_cast<int>(spike[i].pos.y - spike[i].heightHalf), spikeTexture, 1.0f, 1.0f, 0.0f, WHITE);
+			}
+
 
 			//player描画
 			Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);

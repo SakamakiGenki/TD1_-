@@ -57,11 +57,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int playerTexture = Novice::LoadTexture("./Resorces/player.png");
 
 	//backGround読み込み
-	int backGroundTexture = Novice::LoadTexture("./Resorces/backGround.png");
+	//int backGroundTexture = Novice::LoadTexture("./Resorces/backGround.png");
 
 	//背景画像ループ処理の座標
 	float backGroundPosX = 0.0f;
 	float backGroundPosX2 = -1280.0f;
+
+	//ステージ１背景
+	int stage1backGroundTexture = Novice::LoadTexture("./Resorces/stage1backGround.png");
 
 #pragma region spike
 
@@ -235,8 +238,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		case SCENE2:
 			//ステージ1
 			//backGround描画
-			Novice::DrawSprite(static_cast<int>(backGroundPosX), 0, backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
-			Novice::DrawSprite(static_cast<int>(backGroundPosX2), 0, backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
+			Novice::DrawSprite(static_cast<int>(backGroundPosX), 0, stage1backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
+			Novice::DrawSprite(static_cast<int>(backGroundPosX2), 0, stage1backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
 
 			//とげ描画
 			for (int i = 0; i < 10; i++) {

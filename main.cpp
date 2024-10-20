@@ -89,6 +89,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma endregion
 
 
+#pragma region key
+
 	//鍵宣言
 	struct Key {
 		Vector2 pos;
@@ -111,6 +113,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//鍵読み込み
 	int keyTexture = Novice::LoadTexture("./Resorces/key.png");
+
+#pragma endregion
 
 	//シーン切り替え
 	enum SCENE {

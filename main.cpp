@@ -88,6 +88,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma endregion
 
+
+	//鍵宣言
+	struct Key {
+		Vector2 pos;
+		float radius;
+		int isAlive;
+		float distance;
+		float speed;
+	};
+
+	//鍵構造体
+	Key key[3];
+	for (int i = 0; i < 3; i++) {
+		key[i].pos.x = 600.0f + i * 1200.0f;
+		key[i].pos.y = 300.0f;
+		key[i].radius = 32.0f;
+		key[i].isAlive = true ;
+		key[i].distance = collision((key[i].pos.x - player.pos.x), (key[i].pos.y - player.pos.y));
+		key[i].speed = 5.0f;
+	}
+
+	//鍵読み込み
+	int keyTexture = Novice::LoadTexture("./Resorces/key.png");
+
 	//シーン切り替え
 	enum SCENE {
 		SCENE1,
@@ -163,6 +187,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			spike[i].pos.x -= spike[i].speed;
 		}
 
+		//鍵の処理
+		for (int i = 0; i < 3; i++) {
+			key[i].pos.x -= key[i].speed;
+			key[i].distance = collision((key[i].pos.x - player.pos.x), (key[i].pos.y - player.pos.y));
+			if (key[i].distance <= key[i].radius + 32.0f) {
+				key[i].isAlive = false;
+			}
+		}
+
+
+
 		//背景地面の動作速度
 		backGroundPosX -= 3;
 
@@ -205,6 +240,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					static_cast<int>(spike[i].pos.y - spike[i].heightHalf), spikeTexture, 1.0f, 1.0f, 0.0f, WHITE);
 			}
 
+			//鍵描写
+			for (int i = 0; i < 3; i++) {
+				if (key[i].isAlive) {
+					Novice::DrawSprite(static_cast<int>(key[i].pos.x - key[i].radius),
+						static_cast<int>(key[i].pos.y - key[i].radius), keyTexture, 1.0f, 1.0f, 0.0f, WHITE);
+				}
+			}
 
 			//player描画
 			Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);

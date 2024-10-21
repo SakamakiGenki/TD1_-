@@ -32,6 +32,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		float heigth; //画像の縦幅
 		Vector2 velocity; //player速度
 		Vector2 acceleration; //player加速度
+		int isAlive;
 	};
 
 	//player構造体
@@ -42,6 +43,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		player.heigth = 32.0f,
 		player.velocity = {0.0f, 0.0f},
 		player.acceleration = {2.0f, 2.0f},
+		player.isAlive = true 
 	};
 	float playerRad = 16.0f;
 	//playerの動く速度
@@ -125,6 +127,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		SCENE2,
 		SCENE3,
 		SCENE4,
+		SCENE5,
+		SCENE6,
 	
 	};
 	int scene = SCENE1;

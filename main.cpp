@@ -130,12 +130,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//シーン切り替え
 	enum SCENE {
-		SCENE1,
-		SCENE2,
-		SCENE3,
-		SCENE4,
-		SCENE5,
-		SCENE6,
+		SCENE1, //title
+		SCENE2, //stage1
+		SCENE3, //stage2
+		SCENE4, //stage3
+		SCENE5, //gameclear
+		SCENE6, //gameover
 	
 	};
 	int scene = SCENE1;

@@ -123,6 +123,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		key[i].speed = 5.0f;
 	}
 
+	int getkey = 0;
+
 	//鍵読み込み
 	int keyTexture = Novice::LoadTexture("./Resorces/key.png");
 
@@ -168,6 +170,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		case SCENE1:
 			//タイトル
 			player.pos.y = 530.0f;
+			getkey = 0;
 			for (int i = 0; i < 10; i++) {
 				spike[i].pos.x = 500.0f + i * 500.0f;
 				
@@ -222,6 +225,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (spike[i].distance <= spike[i].heightHalf / 2 + 32.0f) {
 				player.isAlive = false;	
 			}
+
+			
 		}
 
 		if (player.isAlive == false) {
@@ -237,6 +242,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (key[i].distance <= key[i].radius + 32.0f) {
 				key[i].isAlive = false;
 			}
+
+			if (key[i].pos.x <= 0 && key[i].isAlive) {
+				key[i].pos.x = 1280.0f + i * 600.0f;
+			}
+
+			if (key[i].isAlive == false && key[i].pos.x <= 0) {
+				
+					getkey = getkey + 1;
+			
+				
+			}
+		}
+
+		
+		if (getkey >= 3) {
+			scene = SCENE5;
 		}
 
 
@@ -259,6 +280,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case SCENE5:
 			//ゲームクリア
+			if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
+				player.isAlive = true;
+				scene = SCENE1;
+
+			}
 			break;
 		case SCENE6:
 			//ゲームオーバー
@@ -312,6 +338,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);
 			Novice::DrawEllipse(static_cast<int>(player.pos.x + player.width / 2), static_cast<int>(player.pos.y + player.heigth / 2),
 				static_cast<int>(playerRad), static_cast<int>(playerRad), 0.0f, WHITE, kFillModeWireFrame);
+
+			Novice::ScreenPrintf(0, 0, "%d", getkey);
 			break;
 
 		case SCENE3:
@@ -322,6 +350,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case SCENE5:
 			//ゲームクリア
+			Novice::DrawBox(1200, 0, 64, 64, 0.0f, BLUE, kFillModeSolid);
+			Novice::ScreenPrintf(0, 0, "%d", getkey);
 			break;
 		case SCENE6:
 			//ゲームオーバー

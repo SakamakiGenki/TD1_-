@@ -76,8 +76,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		float speed;
 		float heightHalf;
 		float widhtHalf;
-
+		float  distance;
 	};
+	
+	
 
 	//とげ構造体
 	Spike spike[10];
@@ -87,10 +89,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		spike[i].speed = 5.0f;
 		spike[i].heightHalf = 32.0f;
 		spike[i].widhtHalf = 32.0f;
+		spike[i].distance = collision((spike[i].pos.x - player.pos.x), ((spike[i].pos.y+spike[i].heightHalf/2) - player.pos.y));
+		
 	}
-
 	//とげ読み込み
 	int spikeTexture = Novice::LoadTexture("./Resorces/spike.png");
+	//
+	
+
 
 #pragma endregion
 
@@ -161,6 +167,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (scene){
 		case SCENE1:
 			//タイトル
+			player.pos.y = 530.0f;
+			for (int i = 0; i < 10; i++) {
+				spike[i].pos.x = 500.0f + i * 500.0f;
+				
+			}
+
+			for (int i = 0; i < 3; i++) {
+				key[i].pos.x = 600.0f + i * 1200.0f;
+				key[i].isAlive = true;
+			}
+
+
 			if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
 				scene = SCENE2;
 			}
@@ -199,7 +217,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//とげの移動
 		for (int i = 0; i < 10; i++) {
 			spike[i].pos.x -= spike[i].speed;
+
+			spike[i].distance = collision((spike[i].pos.x - player.pos.x), ((spike[i].pos.y + spike[i].heightHalf / 2) - player.pos.y));
+			if (spike[i].distance <= spike[i].heightHalf / 2 + 32.0f) {
+				player.isAlive = false;	
+			}
 		}
+
+		if (player.isAlive == false) {
+			scene = SCENE6;
+		}
+
+
 
 		//鍵の処理
 		for (int i = 0; i < 3; i++) {
@@ -228,6 +257,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		case SCENE4:
 			//ステージ３
 			break;
+		case SCENE5:
+			//ゲームクリア
+			break;
+		case SCENE6:
+			//ゲームオーバー
+			if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
+				player.isAlive = true;
+				scene = SCENE1;
+				
+			}
+			break;
 		default:
 			break;
 		}
@@ -253,10 +293,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				Novice::DrawSprite(static_cast<int>(spike[i].pos.x - spike[i].widhtHalf),
 					static_cast<int>(spike[i].pos.y - spike[i].heightHalf), spikeTexture, 1.0f, 1.0f, 0.0f, WHITE);
 				//棘の当たり判定部分
-				Novice::DrawTriangle(int(spike[i].pos.x ), int(spike[i].pos.y- spike[i].heightHalf),//上
-					int(spike[i].pos.x-spike[i].widhtHalf), int(spike[i].pos.y + spike[i].heightHalf),//左下
-					int(spike[i].pos.x + spike[i].widhtHalf), int(spike[i].pos.y + spike[i].heightHalf)//右下
-					, WHITE, kFillModeWireFrame);
+				//Novice::DrawTriangle(int(spike[i].pos.x ), int(spike[i].pos.y- spike[i].heightHalf),//上
+				//	int(spike[i].pos.x-spike[i].widhtHalf), int(spike[i].pos.y + spike[i].heightHalf),//左下
+				//	int(spike[i].pos.x + spike[i].widhtHalf), int(spike[i].pos.y + spike[i].heightHalf)//右下
+				//	, WHITE, kFillModeWireFrame);
+
 			};
 
 			//鍵描写
@@ -278,6 +319,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case SCENE4:
 			//ステージ３
+			break;
+		case SCENE5:
+			//ゲームクリア
+			break;
+		case SCENE6:
+			//ゲームオーバー
+			Novice::DrawBox(0, 0, 64, 64, 0.0f, RED, kFillModeSolid);
 			break;
 		default:
 			break;

@@ -247,17 +247,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				key[i].pos.x = 1280.0f + i * 600.0f;
 			}
 
-			if (key[i].isAlive == false && key[i].pos.x <= 0) {
-				
+			if (key[i].isAlive == false && key[i].pos.x == 0) {
 					getkey = getkey + 1;
-			
-				
 			}
 		}
 
 		
 		if (getkey >= 3) {
 			scene = SCENE5;
+			//ゲームクリア
+		}
+
+		if (spike[9].pos.x <= -100.0f && getkey != 3) {
+			//ゲームオーバー
+			scene = SCENE6;
 		}
 
 

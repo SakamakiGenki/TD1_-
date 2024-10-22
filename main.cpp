@@ -187,6 +187,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 			break;
 		case SCENE2:
+			//ステージ選択画面
+			if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
+				scene = SCENE3;
+			}
+			break;
+		case SCENE3:
 			//ステージ１
 		
 		//playerのジャンプ処理
@@ -275,12 +281,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		backGroundPosX2 = backGroundPosX + 1280.0f;
 		break;
 
-		case SCENE3:
+		case SCENE4:
 			//ステージ２
 			break;
-		case SCENE4:
-			//ステージ３
-			break;
+		
 		case SCENE5:
 			//ゲームクリア
 			if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
@@ -312,6 +316,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//タイトル
 			break;
 		case SCENE2:
+			//ステージ選択画面
+			Novice::DrawBox(0, 0, 64, 64, 0.0f, WHITE, kFillModeSolid);
+			break;
+		case SCENE3:
 			//ステージ1
 			//backGround描画
 			Novice::DrawSprite(static_cast<int>(backGroundPosX), 0, stage1backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
@@ -342,18 +350,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			Novice::DrawEllipse(static_cast<int>(player.pos.x + player.width / 2), static_cast<int>(player.pos.y + player.heigth / 2),
 				static_cast<int>(playerRad), static_cast<int>(playerRad), 0.0f, WHITE, kFillModeWireFrame);
 
-			Novice::ScreenPrintf(0, 0, "%d", getkey);
+			//Novice::ScreenPrintf(0, 0, "%d", getkey);
 			break;
 
-		case SCENE3:
+		case SCENE4:
 			//ステージ２
 			break;
-		case SCENE4:
-			//ステージ３
-			break;
+		
 		case SCENE5:
 			//ゲームクリア
-			Novice::DrawBox(1200, 0, 64, 64, 0.0f, BLUE, kFillModeSolid);
+			Novice::DrawBox(0, 0, 64, 64, 0.0f, BLUE, kFillModeSolid);
 			Novice::ScreenPrintf(0, 0, "%d", getkey);
 			break;
 		case SCENE6:

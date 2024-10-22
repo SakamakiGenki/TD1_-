@@ -142,6 +142,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	};
 	int scene = SCENE1;
 
+	int stageslect = 1;
+
 	//score宣言
 	//int score = 00000;
 	//int displayScore = score;
@@ -188,8 +190,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case SCENE2:
 			//ステージ選択画面
+			if (keys[DIK_D] && !preKeys[DIK_D]) {
+				if (stageslect == 1) {
+					stageslect++;
+				}
+			}
+
+			if (keys[DIK_A] && !preKeys[DIK_A]) {
+				if (stageslect == 2) {
+					stageslect--;
+				}
+			}
 			if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
-				scene = SCENE3;
+				if (stageslect == 1) {
+					scene = SCENE3;
+				}
+				if (stageslect == 2) {
+					scene = SCENE4;
+				}
+
 			}
 			break;
 		case SCENE3:
@@ -317,6 +336,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case SCENE2:
 			//ステージ選択画面
+			Novice::ScreenPrintf(100, 100, "%d", stageslect);
 			Novice::DrawBox(0, 0, 64, 64, 0.0f, WHITE, kFillModeSolid);
 			break;
 		case SCENE3:
@@ -355,6 +375,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		case SCENE4:
 			//ステージ２
+			Novice::DrawEllipse(100, 100, 100, 100, 0.0f, BLACK, kFillModeSolid);
 			break;
 		
 		case SCENE5:

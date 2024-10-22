@@ -144,6 +144,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		key[i].speed = 5.0f;
 	}
 
+	//鍵宣言
+	struct Key2 {
+		Vector2 pos;
+		float radius;
+		int isAlive;
+		float distance;
+		float speed;
+	};
+
+	//鍵構造体
+	Key key2[3];
+	for (int i = 0; i < 3; i++) {
+		key2[i].pos.x = 600.0f + i * 3600.0f;
+		key2[i].pos.y = 510.0f;
+		key2[i].radius = 32.0f;
+		key2[i].isAlive = true;
+		key2[i].distance = collision((key2[i].pos.x - player.pos.x), (key2[i].pos.y - player.pos.y));
+		key2[i].speed = 5.0f;
+	}
+
 	int getkey = 0;
 
 	//鍵読み込み
@@ -202,6 +222,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			for (int i = 0; i < 3; i++) {
 				key[i].pos.x = 600.0f + i * 1200.0f;
 				key[i].isAlive = true;
+				key2[i].pos.x = 600.0f + i * 2400.0f;
+				key2[i].isAlive = true;
+
 			}
 			for (int i = 0; i < 100; i++) {
 				spike2[i].pos.x = 500.0f + i * 220.0f;
@@ -372,6 +395,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				scene = SCENE6;
 			}
 
+			//鍵の処理
+			for (int i = 0; i < 3; i++) {
+				key2[i].pos.x -= key2[i].speed;
+				key2[i].distance = collision((key2[i].pos.x - player.pos.x), (key2[i].pos.y - player.pos.y));
+				if (key2[i].distance <= key2[i].radius + 32.0f) {
+					key2[i].isAlive = false;
+				}
+
+				if (key2[i].pos.x <= 0 && key2[i].isAlive) {
+					key2[i].pos.x = 1280.0f + i * 1200.0f;
+				}
+
+				if (key2[i].isAlive == false && key2[i].pos.x == 0) {
+					getkey = getkey + 1;
+				}
+			}
+
+			if (getkey >= 3) {
+				scene = SCENE5;
+				//ゲームクリア
+			}
+
+			if (spike[9].pos.x <= -100.0f && getkey != 3) {
+				//ゲームオーバー
+				scene = SCENE6;
+			}
+
+
 			//背景地面の動作速度
 			backGroundPosX -= 3;
 
@@ -464,6 +515,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				Novice::DrawSprite(static_cast<int>(spike2[i].pos.x - spike2[i].widhtHalf),
 					static_cast<int>(spike2[i].pos.y - spike2[i].heightHalf), spikeTexture, 1.0f, 1.0f, 0.0f, WHITE);
 			};
+
+			//鍵描写
+			for (int i = 0; i < 3; i++) {
+				if (key2[i].isAlive) {
+					Novice::DrawSprite(static_cast<int>(key2[i].pos.x - key2[i].radius),
+						static_cast<int>(key2[i].pos.y - key2[i].radius), keyTexture, 1.0f, 1.0f, 0.0f, WHITE);
+				}
+			}
+
 			//player描画
 			Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);
 			/*Novice::DrawEllipse(static_cast<int>(player.pos.x + player.width / 2), static_cast<int>(player.pos.y + player.heigth / 2),

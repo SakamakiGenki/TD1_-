@@ -69,6 +69,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int stage1backGroundTexture = Novice::LoadTexture("./Resorces/stage1backGround.png");
 	//ステージ２背景
 	int stage2backGroundTexture = Novice::LoadTexture("./Resorces/stage2backGround.png");
+	//ゲームクリア画像
+	int gameClearTexture = Novice::LoadTexture("./Resorces/gameClear.png");
+	//ゲームオーバー画像
+	int gameOverTexture = Novice::LoadTexture("./Resorces/gameOver.png");
 
 #pragma region spike
 
@@ -479,12 +483,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			for (int i = 0; i < 10; i++) {
 				Novice::DrawSprite(static_cast<int>(spike[i].pos.x - spike[i].widhtHalf),
 					static_cast<int>(spike[i].pos.y - spike[i].heightHalf), spikeTexture, 1.0f, 1.0f, 0.0f, WHITE);
-				//棘の当たり判定部分
-				//Novice::DrawTriangle(int(spike[i].pos.x ), int(spike[i].pos.y- spike[i].heightHalf),//上
-				//	int(spike[i].pos.x-spike[i].widhtHalf), int(spike[i].pos.y + spike[i].heightHalf),//左下
-				//	int(spike[i].pos.x + spike[i].widhtHalf), int(spike[i].pos.y + spike[i].heightHalf)//右下
-				//	, WHITE, kFillModeWireFrame);
-
 			};
 
 			//鍵描写
@@ -500,7 +498,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			Novice::DrawEllipse(static_cast<int>(player.pos.x + player.width / 2), static_cast<int>(player.pos.y + player.heigth / 2),
 				static_cast<int>(playerRad), static_cast<int>(playerRad), 0.0f, WHITE, kFillModeWireFrame);
 
-			//Novice::ScreenPrintf(0, 0, "%d", getkey);
 			break;
 
 		case SCENE4:
@@ -532,12 +529,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		case SCENE5:
 			//ゲームクリア
-			Novice::DrawBox(0, 0, 64, 64, 0.0f, BLUE, kFillModeSolid);
-			Novice::ScreenPrintf(0, 0, "%d", getkey);
+			Novice::DrawSprite(0, 0, gameClearTexture, 1.0f, 1.0f, 0.0f, WHITE);
 			break;
 		case SCENE6:
 			//ゲームオーバー
-			Novice::DrawBox(0, 0, 64, 64, 0.0f, RED, kFillModeSolid);
+			Novice::DrawSprite(0, 0, gameOverTexture, 1.0f, 1.0f, 0.0f, WHITE);
 			break;
 		default:
 			break;

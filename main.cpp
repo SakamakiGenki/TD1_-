@@ -65,6 +65,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	float backGroundPosX = 0.0f;
 	float backGroundPosX2 = -1280.0f;
 
+	//タイトル画像
+	int titolTexture = Novice::LoadTexture("./Resorces/keyCollect_title.png");
+	//ステージ１選択画像
+	int selectstage1Texture =Novice::LoadTexture("./Resorces/stageSerect_1.png");
+	//ステージ2選択画像
+	int selectstage2Texture = Novice::LoadTexture("./Resorces/stageSerect_2.png");
+
+	
+
 	//ステージ１背景
 	int stage1backGroundTexture = Novice::LoadTexture("./Resorces/stage1backGround.png");
 	//ステージ２背景
@@ -467,11 +476,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (scene){
 		case SCENE1:
 			//タイトル
+			Novice::DrawSprite(0, 0, titolTexture, 1.0f, 1.0f, 0.0f, WHITE);
 			break;
 		case SCENE2:
 			//ステージ選択画面
-			Novice::ScreenPrintf(100, 100, "%d", stageslect);
-			Novice::DrawBox(0, 0, 64, 64, 0.0f, WHITE, kFillModeSolid);
+			if (stageslect == 1) {
+				Novice::DrawSprite(0, 0, selectstage1Texture, 1.0f, 1.0f, 0.0f, WHITE);
+			}
+			if (stageslect == 2) {
+				Novice::DrawSprite(0, 0, selectstage2Texture, 1.0f, 1.0f, 0.0f, WHITE);
+			}
+
+			/*Novice::ScreenPrintf(100, 100, "%d", stageslect);
+			Novice::DrawBox(0, 0, 64, 64, 0.0f, WHITE, kFillModeSolid);*/
 			break;
 		case SCENE3:
 			//ステージ1
@@ -495,8 +512,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			//player描画
 			Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);
-			Novice::DrawEllipse(static_cast<int>(player.pos.x + player.width / 2), static_cast<int>(player.pos.y + player.heigth / 2),
-				static_cast<int>(playerRad), static_cast<int>(playerRad), 0.0f, WHITE, kFillModeWireFrame);
+			/*Novice::DrawEllipse(static_cast<int>(player.pos.x + player.width / 2), static_cast<int>(player.pos.y + player.heigth / 2),
+				static_cast<int>(playerRad), static_cast<int>(playerRad), 0.0f, WHITE, kFillModeWireFrame);*/
 
 			break;
 

@@ -73,6 +73,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int gameClearTexture = Novice::LoadTexture("./Resorces/gameClear.png");
 	//ゲームオーバー画像
 	int gameOverTexture = Novice::LoadTexture("./Resorces/gameOver.png");
+	//ゲームタイトル画像
+	int gameTitle = Novice::LoadTexture("./Resorces/keyCollect_title.png");
+	//ステージ選択画像１，２
+	int stageSelect1 = Novice::LoadTexture("./Resorces/stageSelect_1.png");
+	int stageSelect2 = Novice::LoadTexture("./Resorces/stageSelect_2.png");
 
 #pragma region spike
 
@@ -220,7 +225,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			getkey = 0;
 			for (int i = 0; i < 10; i++) {
 				spike[i].pos.x = 500.0f + i * 500.0f;
-				
+				spike2[i].speed = 5.0f;
 			}
 
 			for (int i = 0; i < 3; i++) {
@@ -241,6 +246,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case SCENE2:
 			//ステージ選択画面
+
 			if (keys[DIK_D] && !preKeys[DIK_D]) {
 				if (stageslect == 1) {
 					stageslect++;
@@ -249,6 +255,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			if (keys[DIK_A] && !preKeys[DIK_A]) {
 				if (stageslect == 2) {
+					Novice::DrawSprite(0, 0, stageSelect1, 1.0f, 1.0f, 0.0f, WHITE);
 					stageslect--;
 				}
 			}
@@ -264,7 +271,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 			break;
 		case SCENE3:
-			//ステージ１
+			//ステージ１/////////////////////////////////
 		
 		//playerのジャンプ処理
 		if (!keys[DIK_W] && preKeys[DIK_W]) {
@@ -353,7 +360,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		break;
 
 		case SCENE4:
-			//ステージ２
+			//ステージ２///////////////////
 			//playerのジャンプ処理
 			if (!keys[DIK_W] && preKeys[DIK_W]) {
 				if (player.velocity.y < 0.0f) {
@@ -391,7 +398,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				if (spike2[i].distance <= spike2[i].heightHalf / 2 + 32.0f) {
 					player.isAlive = false;
 				}
+				//鍵を一個取ったら棘が加速(蛇足だったら消す)//
+				if (getkey == 1) {
+					spike2[i].speed = 6.5f;
+				}
 
+				if (getkey == 2) {
+					spike2[i].speed = 7.0f;
+				}
 
 			}
 
@@ -428,7 +442,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 			//背景地面の動作速度
-			backGroundPosX -= 3;
+			backGroundPosX -= 4;
 
 			//背景地面ループの処理
 			if (backGroundPosX <= -1280.0f) {
@@ -467,9 +481,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (scene){
 		case SCENE1:
 			//タイトル
+			Novice::DrawSprite(0, 0, gameTitle, 1.0f, 1.0f, 0.0f, WHITE);
 			break;
 		case SCENE2:
 			//ステージ選択画面
+			if (stageslect == 1) {
+				Novice::DrawSprite(0, 0, stageSelect1, 1.0f, 1.0f, 0.0f, WHITE);
+			}
+
+			if (stageslect == 2) {
+				Novice::DrawSprite(0, 0, stageSelect2, 1.0f, 1.0f, 0.0f, WHITE);
+			}
 			Novice::ScreenPrintf(100, 100, "%d", stageslect);
 			Novice::DrawBox(0, 0, 64, 64, 0.0f, WHITE, kFillModeSolid);
 			break;

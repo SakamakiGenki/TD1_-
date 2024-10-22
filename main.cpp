@@ -67,6 +67,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//ステージ１背景
 	int stage1backGroundTexture = Novice::LoadTexture("./Resorces/stage1backGround.png");
+	//ステージ２背景
+	int stage2backGroundTexture = Novice::LoadTexture("./Resorces/stage2backGround.png");
 
 #pragma region spike
 
@@ -96,6 +98,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int spikeTexture = Novice::LoadTexture("./Resorces/spike.png");
 	//
 	
+	//ステージ２用
+	struct Spike2 {
+		Vector2 pos;
+		float speed;
+		float heightHalf;
+		float widhtHalf;
+		float  distance;
+	};
+	//とげ構造体
+	Spike spike2[100];
+	for (int i = 0; i < 100; i++) {
+		spike2[i].pos.x = 500.0f + i * 220.0f;
+		spike2[i].pos.y = 514.0f;
+		spike2[i].speed = 5.0f;
+		spike2[i].heightHalf = 32.0f;
+		spike2[i].widhtHalf = 32.0f;
+		spike2[i].distance = collision((spike2[i].pos.x - player.pos.x), ((spike2[i].pos.y + spike2[i].heightHalf / 2) - player.pos.y));
+
+	}
 
 
 #pragma endregion
@@ -182,6 +203,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				key[i].pos.x = 600.0f + i * 1200.0f;
 				key[i].isAlive = true;
 			}
+			for (int i = 0; i < 100; i++) {
+				spike2[i].pos.x = 500.0f + i * 220.0f;
+			}
 
 
 			if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
@@ -207,6 +231,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				}
 				if (stageslect == 2) {
 					scene = SCENE4;
+					
 				}
 
 			}
@@ -302,6 +327,60 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		case SCENE4:
 			//ステージ２
+			//playerのジャンプ処理
+			if (!keys[DIK_W] && preKeys[DIK_W]) {
+				if (player.velocity.y < 0.0f) {
+					player.velocity.y /= 4;
+				}
+			}
+			if (keys[DIK_W] && !preKeys[DIK_W]) {
+				if (jumpCount > 0) {
+					player.velocity.y = -15.0f;
+					jumpCount--;
+				}
+			} else { //押されていないとき
+				//重力加速度の反射
+				player.acceleration.y = 0.8f;
+
+				//速度に加速度を足していく
+				player.velocity.y += player.acceleration.y;
+			}
+			//posyに速度を足していく(ballは下向きに加速する)
+			player.pos.y += player.velocity.y;
+
+			//地面にめり込まない処理
+			if (player.pos.y >= screenDown - playerRad) {
+				player.pos.y = screenDown - playerRad;
+				player.velocity.y = player.velocity.y * -e;
+				jumpCount = 2;
+			}
+
+			//とげの移動
+			for (int i = 0; i < 100; i++) {
+				spike2[i].pos.x -= spike2[i].speed;
+
+				spike2[i].distance = collision((spike2[i].pos.x - player.pos.x), 
+					((spike2[i].pos.y + spike2[i].heightHalf / 2) - player.pos.y));
+				if (spike2[i].distance <= spike2[i].heightHalf / 2 + 32.0f) {
+					player.isAlive = false;
+				}
+
+
+			}
+
+			if (player.isAlive == false) {
+				scene = SCENE6;
+			}
+
+			//背景地面の動作速度
+			backGroundPosX -= 3;
+
+			//背景地面ループの処理
+			if (backGroundPosX <= -1280.0f) {
+				backGroundPosX = 0.0f;
+			}
+			backGroundPosX2 = backGroundPosX + 1280.0f;
+
 			break;
 		
 		case SCENE5:
@@ -375,7 +454,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		case SCENE4:
 			//ステージ２
-			Novice::DrawEllipse(100, 100, 100, 100, 0.0f, BLACK, kFillModeSolid);
+			
+			//背景
+			Novice::DrawSprite(static_cast<int>(backGroundPosX), 0, stage2backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
+			Novice::DrawSprite(static_cast<int>(backGroundPosX2), 0, stage2backGroundTexture, 1.0f, 1.0f, 0.0f, WHITE);
+
+			// //とげ描画
+			for (int i = 0; i < 100; i++) {
+				Novice::DrawSprite(static_cast<int>(spike2[i].pos.x - spike2[i].widhtHalf),
+					static_cast<int>(spike2[i].pos.y - spike2[i].heightHalf), spikeTexture, 1.0f, 1.0f, 0.0f, WHITE);
+			};
+			//player描画
+			Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);
+			/*Novice::DrawEllipse(static_cast<int>(player.pos.x + player.width / 2), static_cast<int>(player.pos.y + player.heigth / 2),
+				static_cast<int>(playerRad), static_cast<int>(playerRad), 0.0f, WHITE, kFillModeWireFrame);*/
 			break;
 		
 		case SCENE5:

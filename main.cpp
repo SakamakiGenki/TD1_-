@@ -83,6 +83,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//ゲームオーバー画像
 	int gameOverTexture = Novice::LoadTexture("./Resorces/gameOver.png");
 
+	//音達
+	int jumpSounds1 = Novice::LoadAudio("./Resorces/NES-Action01-01(Jump).mp3");
+	//int jumpSounds2 = Novice::LoadAudio("./Resorces/NES-Action01-02(Jump).mp3");
+	int getkeySounds = Novice::LoadAudio("./Resorces/NES-Action01-09(Item).mp3");
+	int titleBgm = Novice::LoadAudio("./Resorces/goraku iinkai.mp3");
+	//int stage1Bgm = Novice::LoadAudio("./Resorces/dotabatare-su.mp3");
+	//int stage2Bgm = Novice::LoadAudio("./Resorces/tikara ga minagiru.mp3");
+	int playHandle = -1;
+
 #pragma region spike
 
 	//とげ宣言
@@ -225,6 +234,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (scene){
 		case SCENE1:
 			//タイトル
+
+			if(!Novice::IsPlayingAudio(playHandle)|| playHandle==-1){
+				playHandle=Novice::PlayAudio(titleBgm, 1, 0.5);
+			}
+
 			player.pos.y = 530.0f;
 			getkey = 0;
 			for (int i = 0; i < 10; i++) {
@@ -246,7 +260,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 			if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
-				scene = SCENE2;
+				Novice::StopAudio(titleBgm);
+				scene = SCENE2;		
 			}
 			break;
 		case SCENE2:
@@ -276,17 +291,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case SCENE3:
 			//ステージ１/////////////////////////////////
-		
+			/*if (!Novice::IsPlayingAudio(playHandle) || playHandle == -1) {
+				playHandle = Novice::PlayAudio(stage1Bgm, 1, 0.5);
+			}*/
 		//playerのジャンプ処理
 		if (!keys[DIK_W] && preKeys[DIK_W]) {
 			if (player.velocity.y < 0.0f) {
 				player.velocity.y /= 4;
+				Novice::PlayAudio(jumpSounds1, 0, 0.5);
 			}
 		}
 		if (keys[DIK_W] && !preKeys[DIK_W]) {
 			if (jumpCount > 0) {
 				player.velocity.y = -15.0f;
 				jumpCount--;
+				Novice::PlayAudio(jumpSounds1, 0, 0.5);
 			}
 		} else { //押されていないとき
 			//重力加速度の反射
@@ -337,6 +356,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			if (key[i].isAlive == false && key[i].pos.x == 0) {
 					getkey = getkey + 1;
+					Novice::PlayAudio(getkeySounds, 0, 0.5);
 			}
 		}
 
@@ -365,6 +385,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		case SCENE4:
 			//ステージ２///////////////////
+			
+			//Novice::PlayAudio(stage2Bgm, 1, 0.5);
+			 
 			//playerのジャンプ処理
 			if (!keys[DIK_W] && preKeys[DIK_W]) {
 				if (player.velocity.y < 0.0f) {
@@ -431,6 +454,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 				if (key2[i].isAlive == false && key2[i].pos.x == 0) {
 					getkey = getkey + 1;
+					Novice::PlayAudio(getkeySounds, 0, 0.5);
 				}
 
 			}

@@ -237,6 +237,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				key[i].isAlive = true;
 				key2[i].pos.x = 600.0f + i * 2400.0f;
 				key2[i].isAlive = true;
+				key2[i].speed = 5.0f;
 
 			}
 			for (int i = 0; i < 100; i++) {
@@ -402,13 +403,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					player.isAlive = false;
 				}
 				//鍵を一個取ったら棘が加速(蛇足だったら消す)//
-				if (getkey == 1) {
-					spike2[i].speed = 6.5f;
-				}
-
-				if (getkey == 2) {
+				/*if (getkey >= 1) {
 					spike2[i].speed = 7.0f;
 				}
+
+				if (getkey >= 2) {
+					spike2[i].speed = 7.5f;
+				}*/
 
 			}
 
@@ -431,7 +432,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				if (key2[i].isAlive == false && key2[i].pos.x == 0) {
 					getkey = getkey + 1;
 				}
+
 			}
+
+			/*if (getkey >= 1) {
+				key2[1].speed = 7.0f;
+			}
+
+			if (getkey >= 2) {
+				key2[2].speed = 7.5f;
+			}*/
 
 			if (getkey >= 3) {
 				scene = SCENE5;
@@ -545,6 +555,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 						static_cast<int>(key2[i].pos.y - key2[i].radius), keyTexture, 1.0f, 1.0f, 0.0f, WHITE);
 				}
 			}
+
+			//デバッグ　
+			Novice::ScreenPrintf(0, 0, "%d", getkey);
 
 			//player描画
 			Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);

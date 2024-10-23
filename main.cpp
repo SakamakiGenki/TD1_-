@@ -68,9 +68,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//タイトル画像
 	int titolTexture = Novice::LoadTexture("./Resorces/keyCollect_title.png");
 	//ステージ１選択画像
-	int selectstage1Texture =Novice::LoadTexture("./Resorces/stageSerect_1.png");
+	int selectstage1Texture =Novice::LoadTexture("./Resorces/stageSelect_1.png");
 	//ステージ2選択画像
-	int selectstage2Texture = Novice::LoadTexture("./Resorces/stageSerect_2.png");
+	int selectstage2Texture = Novice::LoadTexture("./Resorces/stageSelect_2.png");
 
 	
 

@@ -557,7 +557,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 
 			//デバッグ　
-			Novice::ScreenPrintf(0, 0, "%d", getkey);
+			//Novice::ScreenPrintf(0, 0, "%d", getkey);
 
 			//player描画
 			Novice::DrawSprite(static_cast<int>(player.pos.x), static_cast<int>(player.pos.y), playerTexture, 1.0f, 1.0f, 0.0f, WHITE);

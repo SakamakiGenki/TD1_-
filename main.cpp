@@ -403,13 +403,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					player.isAlive = false;
 				}
 				//鍵を一個取ったら棘が加速(蛇足だったら消す)//
-				/*if (getkey >= 1) {
+			    if (getkey >= 1) {
 					spike2[i].speed = 7.0f;
 				}
 
 				if (getkey >= 2) {
-					spike2[i].speed = 7.5f;
-				}*/
+					spike2[i].speed = 8.5f;
+				}
 
 			}
 

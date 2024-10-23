@@ -431,7 +431,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				}
 
 				if (getkey >= 2) {
-					spike2[i].speed = 8.5f;
+					spike2[i].speed = 8.8f;
 				}
 
 			}
